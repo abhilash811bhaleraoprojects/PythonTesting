@@ -1,6 +1,6 @@
 #prime number is basically a number which has 2 factors i.e 1 and itself
 
-num = 5
+num = 28
 count = 0
 
 if num > 1:
