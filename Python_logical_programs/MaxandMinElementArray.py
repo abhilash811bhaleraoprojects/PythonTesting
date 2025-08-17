@@ -12,3 +12,18 @@ for i in range(1,n):
         max = lis[i]
 
 print(max)
+
+
+
+# to print the min element
+
+lis = [10, 90, 76, 80]
+
+min = lis[0]
+n = len(lis)
+
+for i in range(1,n):
+    if lis[i] < min:
+        min = lis[i]
+
+print(min)
