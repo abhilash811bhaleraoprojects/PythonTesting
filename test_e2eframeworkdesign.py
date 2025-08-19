@@ -12,6 +12,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 def test_e2e(browserInstance):
     driver = browserInstance
+    driver.get("https://rahulshettyacademy.com/loginpagePractise/")
+    driver.find_element(By.ID, "username").send_keys("rahulshettyacademy")
+    driver.find_element(By.ID, "password").send_keys("learning")
+    driver.find_element(By.ID, "signInBtn").click()
     driver.find_element(By.XPATH, "//a[@href='/angularpractice/shop']").click()
     products = driver.find_elements(By.XPATH, "//div[@class='card h-100']")
 
@@ -31,5 +35,5 @@ def test_e2e(browserInstance):
     driver.find_element(By.XPATH, "//input[@type='submit']").click()
     success_text = driver.find_element(By.CLASS_NAME, "alert-success").text
     assert "Success! Thank you" in success_text
-    driver.close()
+    #driver.close()
 
