@@ -1,5 +1,7 @@
+import json
 from itertools import product
 
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -8,25 +10,25 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pageObject.login import LoginPage
+from pageObject.shopPage import ShopPage
+test_data_path = '../data/test_e2eframeworkdesign.json'
+with open (test_data_path) as f:
+    test_data = json.load(f)
+    test_list = test_data["data"]
 
 
-def test_e2e(browserInstance):
+@pytest.mark.parametrize("test_list_item", test_list)
+def test_e2e(browserInstance,test_list_item):
     driver = browserInstance
-    driver.get("https://rahulshettyacademy.com/loginpagePractise/")
+
     loginPage = LoginPage(driver)
-    loginPage.login()
+    shop_page = loginPage.login(test_list_item ["userEmail"], test_list_item["userPassword"])
 
+    shop_page.add_product_to_cart(test_list_item ["productName"])
+    checkout_confirmation = shop_page.goToCart()
+    checkout_confirmation.checkout()
+    checkout_confirmation.enter_delivery_address("ind")
+    checkout_confirmation.validate_order()
 
-
-
-    driver.find_element(By.XPATH, "//button[@class='btn btn-success']").click()
-    driver.find_element(By.ID, "country").send_keys("ind")
-    wait = WebDriverWait(driver, 10)
-    wait.until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "India")))
-    driver.find_element(By.LINK_TEXT, "India").click()
-    driver.find_element(By.XPATH, "//div[@class='checkbox checkbox-primary']").click()
-    driver.find_element(By.XPATH, "//input[@type='submit']").click()
-    success_text = driver.find_element(By.CLASS_NAME, "alert-success").text
-    assert "Success! Thank you" in success_text
     #driver.close()
 

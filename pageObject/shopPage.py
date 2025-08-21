@@ -1,5 +1,7 @@
 from selenium.webdriver.common.by import By
 
+from pageObject.check_out_and_confirmation import Checkout_Confirmation
+
 
 class ShopPage:
 
@@ -7,6 +9,7 @@ class ShopPage:
         self.driver = driver
         self.shop_link =(By.XPATH, "//a[@href='/angularpractice/shop']")
         self.product_cards = (By.XPATH, "//div[@class='card h-100']")
+        self.check_out_button = (By.CSS_SELECTOR, "a[class*='btn btn-primary']")
 
 
     def add_product_to_cart(self,productName):
@@ -20,4 +23,6 @@ class ShopPage:
                 product.find_element(By.XPATH, "div/button").click()
 
     def goToCart(self):
-        self.driver.find_element(By.CSS_SELECTOR, "a[class*='btn btn-primary']").click()
+        self.driver.find_element(*self.check_out_button).click()
+        checkout_confirmation = Checkout_Confirmation(self,driver)
+        return checkout_confirmation

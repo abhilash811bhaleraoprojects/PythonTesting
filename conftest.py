@@ -23,5 +23,6 @@ def browserInstance(request):
     #driver.get("https://rahulshettyacademy.com/angularpractice/")
     driver.maximize_window()
 
+    driver.get("https://rahulshettyacademy.com/loginpagePractise/")
     yield driver
     driver.close()
