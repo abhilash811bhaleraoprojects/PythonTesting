@@ -1,11 +1,13 @@
 from selenium.webdriver.common.by import By
 
 from pageObject.check_out_and_confirmation import Checkout_Confirmation
+from utils.browserutils import BrowserUtils
 
 
-class ShopPage:
+class ShopPage(BrowserUtils):
 
     def __init__(self,driver):
+        super().__init__(driver)
         self.driver = driver
         self.shop_link =(By.XPATH, "//a[@href='/angularpractice/shop']")
         self.product_cards = (By.XPATH, "//div[@class='card h-100']")
@@ -26,3 +28,4 @@ class ShopPage:
         self.driver.find_element(*self.check_out_button).click()
         checkout_confirmation = Checkout_Confirmation(self,driver)
         return checkout_confirmation
+
